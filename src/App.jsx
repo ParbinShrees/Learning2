@@ -1,7 +1,9 @@
 // import "./App.css";
 // import { Routes, Route } from "react-router-dom";
 
-import SchoolCard from "./Component/SchoolCard/SchoolCard";
+import Counter from "./Component/Counter";
+import FruitList from "./Component/FruitList";
+// import SchoolCard from "./Component/SchoolCard/SchoolCard";
 
 // import Navbar from "./Component/Nav";
 // import Footer from "./Component/Footer";
@@ -37,22 +39,23 @@ import SchoolCard from "./Component/SchoolCard/SchoolCard";
 
 function App() {
   // The data lives HERE, at the top level
-  const school = {
-    name: "Sunrise High School",
-    students: [
-      { id: 1, name: "Aarav", grade: "A" },
-      { id: 2, name: "Sita", grade: "B+" },
-      { id: 3, name: "Ramesh", grade: "A-" },
-    ],
-  };
+ return <FruitList/>;
+  // const school = {
+  //   name: "Sunrise High School",
+  //   students: [
+  //     { id: 1, name: "Aarav", grade: "A" },
+  //     { id: 2, name: "Sita", grade: "B+" },
+  //     { id: 3, name: "Ramesh", grade: "A-" },
+  //   ],
+  // };
 
-  return (
-    <div>
-      <h1>Welcome to the School Portal</h1>
-      {/* Level 0 ➜ Level 1: pass the whole school object */}
-      <SchoolCard school={school} />
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <h1>Welcome to the School Portal</h1>
+  //     {/* Level 0 ➜ Level 1: pass the whole school object */}
+  //     <SchoolCard school={school} />
+  //   </div>
+  // );
 }
 
 export default App;
