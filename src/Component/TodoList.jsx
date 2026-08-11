@@ -8,11 +8,8 @@ function TodoList() {
       .then((response) => response.json())
       .then((data) => {
         setTodos(data);
-      }
-    );
-  }, 
-  []
-);
+      });
+  }, []);
 
   return (
     <div>
