@@ -1,8 +1,12 @@
+/* ========================================
+   DAY 6 - COMMON CARD
+======================================== */
+
 .day6-card {
   width: min(900px, 92%);
   margin: 30px auto;
   padding: 30px;
-  background: white;
+  background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
@@ -35,7 +39,10 @@
   color: #6b7280;
 }
 
-/* TODO */
+
+/* ========================================
+   TODO LIST
+======================================== */
 
 .todo-total,
 .user-count {
@@ -161,7 +168,10 @@
   color: #a16207;
 }
 
-/* TIMER */
+
+/* ========================================
+   COUNTDOWN TIMER
+======================================== */
 
 .timer-card {
   text-align: center;
@@ -253,12 +263,12 @@
 
 .primary-btn {
   background: #6366f1;
-  color: white;
+  color: #ffffff;
 }
 
 .secondary-btn {
   background: #f59e0b;
-  color: white;
+  color: #ffffff;
 }
 
 .reset-btn {
@@ -266,7 +276,10 @@
   color: #374151;
 }
 
-/* SEARCH */
+
+/* ========================================
+   USER SEARCH
+======================================== */
 
 .search-box {
   display: flex;
@@ -327,7 +340,7 @@
   place-items: center;
   border-radius: 50%;
   background: #6366f1;
-  color: white;
+  color: #ffffff;
   font-size: 20px;
   font-weight: 700;
 }
@@ -361,6 +374,58 @@
   color: #6b7280;
 }
 
+
+/* ========================================
+   PHOTO GALLERY
+======================================== */
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.photo-card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  transition: 0.25s;
+}
+
+.photo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+.photo-card img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.photo-info {
+  padding: 14px;
+}
+
+.photo-info h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #111827;
+  text-transform: capitalize;
+}
+
+.photo-info span {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+
+/* ========================================
+   LOADING & ERROR
+======================================== */
+
 .loading {
   padding: 30px;
   text-align: center;
@@ -374,7 +439,16 @@
   border-radius: 10px;
 }
 
-/* MOBILE */
+
+/* ========================================
+   MOBILE RESPONSIVE
+======================================== */
+
+@media (max-width: 700px) {
+  .photo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 
 @media (max-width: 650px) {
   .day6-card {
@@ -399,5 +473,28 @@
 
   .timer-buttons {
     flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 450px) {
+  .photo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .day6-card {
+    width: 94%;
+    padding: 16px;
+  }
+
+  .card-header h2 {
+    font-size: 23px;
+  }
+
+  .todo-item {
+    align-items: flex-start;
+  }
+
+  .status {
+    font-size: 10px;
   }
 }
