@@ -4,17 +4,21 @@ import UserSearch from "./Component/UserSearch";
 
 function App() {
   return (
-    <div>
-      <TodoList />
+    <main>
+      <header className="day6-header">
+        <p>REACT • DAY 6</p>
+        <h1>useEffect & API Practice</h1>
+        <span>
+          Fetching data • Timers • Searching
+        </span>
+      </header>
 
-      <hr />
+      <TodoList />
 
       <Countdown />
 
-      <hr />
-
       <UserSearch />
-    </div>
+    </main>
   );
 }
 
