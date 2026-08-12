@@ -3,12 +3,13 @@
 // import UserSearch from "./Component/UserSearch";
 // import PhotoGallery from "./Component/PhotoGallery";
 
-import { Routes,Route } from "react-router-dom";
-import Navbar from "./Component/Nav";
-import Home from "./Pages/Home";
-import About from "./Pages/About";
-import Services from "./Pages/Services";
-import Footer from "./Component/Footer";
+// import { Routes,Route } from "react-router-dom";
+// import Navbar from "./Component/Nav";
+// import Home from "./Pages/Home";
+// import About from "./Pages/About";
+// import Services from "./Pages/Services";
+// import Footer from "./Component/Footer";
+// import LoginPage from "./Component/LoginPage";
 
 // function App() {
 //   return (
@@ -174,20 +175,50 @@ import Footer from "./Component/Footer";
 
 // export default App;
 
-export default function App() {
+import { Routes, Route } from "react-router-dom";
+
+import Navbar from "./Component/Nav";
+import Home from "./Pages/Home";
+import Services from "./Pages/Services";
+import LoginPage from "./Component/LoginPage";
+import Dashboard from "./Component/Dashboard";
+import Contact from "./Pages/Contact";
+
+
+function App() {
   return (
     <div>
-      <Navbar/>
-      
+      <Navbar />
+
       <Routes>
-        <Route path="/" element={<Home/>}/> 
-        <Route path="/about" element={<About/>}/>
-        <Route path="/services" element={<Services/>}/>
-        <Route path="/contact" element={<h1>Contact Page</h1>}/>
-        <Route path="*" element={<h1>404 Not Found</h1>}/>
-        
+        <Route path="/" element={<Home />} />
+
+        <Route path="/about" element={<Abouts/>} />
+
+        <Route path="/services" element={<Services />} />
+
+        <Route
+          path="/contact"
+          element={<Contact />} />
+
+        <Route
+          path="/login"
+          element={<LoginPage />}
+        />
+
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="*"
+          element={<h1>404 Not Found</h1>}
+        />
       </Routes>
-      <Footer/>
+    <Footeer />
     </div>
-  );  
+  );
 }
+
+export default App;
