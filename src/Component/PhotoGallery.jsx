@@ -8,7 +8,7 @@ function PhotoGallery() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/photos?_limit=12")
+    fetch("https://picsum.photos/v2/list?page=1&limit=12")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch photos");
@@ -28,7 +28,7 @@ function PhotoGallery() {
   }, []);
 
   const filteredPhotos = photos.filter((photo) =>
-    photo.title.toLowerCase().includes(search.toLowerCase())
+    photo.author.toLowerCase().includes(search.toLowerCase())
   );
 
   if (loading) {
@@ -36,7 +36,7 @@ function PhotoGallery() {
       <section className="day6-card">
         <div className="loading">
           <h2>📸 Loading photos...</h2>
-          <p>Please wait while we fetch the images.</p>
+          <p>Fetching real images from the API...</p>
         </div>
       </section>
     );
@@ -57,12 +57,12 @@ function PhotoGallery() {
 
       <div className="card-header">
         <div>
-          <p className="eyebrow">API • FETCH</p>
+          <p className="eyebrow">API • REAL IMAGES</p>
 
           <h2>📸 Photo Gallery</h2>
 
           <p className="subtitle">
-            Images fetched from JSONPlaceholder API
+            Real photographs fetched from an external API
           </p>
         </div>
 
@@ -77,7 +77,7 @@ function PhotoGallery() {
 
         <input
           type="text"
-          placeholder="Search photos..."
+          placeholder="Search by photographer..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -92,29 +92,39 @@ function PhotoGallery() {
       {filteredPhotos.length === 0 ? (
         <div className="no-results">
           <span>😕</span>
+
           <h3>No photos found</h3>
-          <p>Try searching for something else.</p>
+
+          <p>
+            Try searching for another photographer.
+          </p>
         </div>
       ) : (
         <div className="photo-grid">
+
           {filteredPhotos.map((photo) => (
             <div className="photo-card" key={photo.id}>
 
               <img
-                src={photo.thumbnailUrl}
-                alt={photo.title}
+                src={photo.download_url}
+                alt={`Photo by ${photo.author}`}
               />
 
               <div className="photo-info">
-                <h3>{photo.title}</h3>
+
+                <h3>
+                  📷 {photo.author}
+                </h3>
 
                 <span>
                   Photo #{photo.id}
                 </span>
+
               </div>
 
             </div>
           ))}
+
         </div>
       )}
 
