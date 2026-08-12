@@ -1,26 +1,37 @@
-/* =====================================================
-   DAY 6 — EDITORIAL / MODERN LAYOUT
-===================================================== */
+/* =========================================================
+   DAY 06 — PREMIUM EDITORIAL UI
+========================================================= */
 
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap");
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
 
 :root {
-  --background: #f1f1ee;
+  --bg: #f2f2ef;
   --surface: #ffffff;
-  --text: #111111;
-  --muted: #777777;
-  --light: #a2a2a2;
-  --line: #ddddda;
-  --dark-line: #222222;
+  --surface-soft: #e9e9e5;
 
-  --sidebar-width: 210px;
-  --content-padding: clamp(24px, 5vw, 72px);
+  --black: #101010;
+  --text: #171717;
+  --muted: #777;
+  --light: #a3a3a3;
+
+  --line: #dcdcd7;
+  --line-dark: #191919;
+
+  --sidebar: 225px;
+  --padding: clamp(25px, 5vw, 85px);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 
-/* =====================================================
+/* =========================================================
    RESET
-===================================================== */
+========================================================= */
 
 * {
   box-sizing: border-box;
@@ -28,11 +39,13 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 30px;
 }
 
 body {
   margin: 0;
-  background: var(--background);
+
+  background: var(--bg);
   color: var(--text);
 
   font-family: "Inter", Arial, sans-serif;
@@ -45,10 +58,15 @@ input {
   font-family: inherit;
 }
 
+::selection {
+  background: var(--black);
+  color: white;
+}
 
-/* =====================================================
-   PAGE STRUCTURE
-===================================================== */
+
+/* =========================================================
+   PAGE
+========================================================= */
 
 .day6-page {
   min-height: 100vh;
@@ -56,24 +74,25 @@ input {
 }
 
 
-/* =====================================================
+/* =========================================================
    SIDEBAR
-===================================================== */
+========================================================= */
 
 .sidebar {
   position: fixed;
+
   inset: 0 auto 0 0;
 
-  width: var(--sidebar-width);
+  width: var(--sidebar);
 
-  padding: 30px 26px;
-
-  background: var(--background);
-
-  border-right: 1px solid var(--line);
+  padding: 32px 28px;
 
   display: flex;
   flex-direction: column;
+
+  background: var(--bg);
+
+  border-right: 1px solid var(--line);
 
   z-index: 100;
 }
@@ -86,14 +105,14 @@ input {
 
   font-family: "DM Sans", sans-serif;
 
-  font-size: 19px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 700;
 
-  letter-spacing: -0.8px;
+  letter-spacing: -1px;
 }
 
 .logo span {
-  margin-left: 3px;
+  margin-left: 4px;
 
   color: var(--light);
 
@@ -101,7 +120,7 @@ input {
 }
 
 
-/* NAVIGATION */
+/* NAV */
 
 .sidebar nav {
   margin-top: 75px;
@@ -109,7 +128,7 @@ input {
   display: flex;
   flex-direction: column;
 
-  gap: 15px;
+  gap: 5px;
 }
 
 .sidebar nav a {
@@ -117,18 +136,22 @@ input {
 
   width: fit-content;
 
-  color: #666;
+  padding: 8px 0;
+
+  color: #777;
 
   text-decoration: none;
 
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 10px;
+  font-weight: 600;
 
-  letter-spacing: 0.9px;
+  letter-spacing: 1.2px;
 
   text-transform: uppercase;
 
-  transition: color 0.2s ease;
+  transition:
+    color 0.3s var(--ease),
+    transform 0.3s var(--ease);
 }
 
 .sidebar nav a::before {
@@ -136,103 +159,110 @@ input {
 
   position: absolute;
 
-  left: -12px;
+  left: -18px;
   top: 50%;
 
-  width: 4px;
-  height: 4px;
-
-  background: #111;
+  width: 5px;
+  height: 5px;
 
   border-radius: 50%;
 
+  background: var(--black);
+
   opacity: 0;
 
-  transform: translateY(-50%);
+  transform: translateY(-50%) scale(0);
 
-  transition: opacity 0.2s ease;
+  transition:
+    opacity 0.3s var(--ease),
+    transform 0.3s var(--ease);
 }
 
 .sidebar nav a:hover {
-  color: #111;
+  color: var(--black);
+  transform: translateX(5px);
 }
 
 .sidebar nav a:hover::before {
   opacity: 1;
+  transform: translateY(-50%) scale(1);
 }
 
 
-/* SIDEBAR FOOTER */
+/* SIDEBAR BOTTOM */
 
 .sidebar-bottom {
   margin-top: auto;
 
+  padding-top: 20px;
+
   display: flex;
   flex-direction: column;
 
-  gap: 5px;
+  gap: 6px;
+
+  border-top: 1px solid var(--line);
 
   color: #999;
 
-  font-size: 9px;
+  font-size: 8px;
 
-  line-height: 1.5;
+  line-height: 1.6;
 
-  letter-spacing: 0.9px;
+  letter-spacing: 1.2px;
 
   text-transform: uppercase;
 }
 
 
-/* =====================================================
-   MAIN CONTENT
-===================================================== */
+/* =========================================================
+   MAIN
+========================================================= */
 
 .main-content {
-  width: calc(100% - var(--sidebar-width));
+  width: calc(100% - var(--sidebar));
 
-  margin-left: var(--sidebar-width);
+  margin-left: var(--sidebar);
 
   background: var(--surface);
 }
 
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 
 .hero {
-  min-height: 700px;
+  min-height: 760px;
 
-  padding: 28px var(--content-padding) 70px;
-
-  border-bottom: 1px solid var(--line);
+  padding: 30px var(--padding) 80px;
 
   display: flex;
   flex-direction: column;
+
+  background: var(--surface);
+
+  border-bottom: 1px solid var(--line);
 }
 
 
-/* HERO TOP */
+/* TOP BAR */
 
 .hero-top {
-  width: 100%;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  padding-bottom: 16px;
+  padding-bottom: 17px;
 
-  border-bottom: 1px solid var(--dark-line);
+  border-bottom: 1px solid var(--line-dark);
 
   color: #777;
 
   font-size: 9px;
+  font-weight: 600;
 
-  font-weight: 500;
-
-  letter-spacing: 1.2px;
+  letter-spacing: 1.6px;
 }
 
 
@@ -243,129 +273,169 @@ input {
 
   display: grid;
 
-  grid-template-columns: minmax(0, 1fr) 260px;
+  grid-template-columns: minmax(0, 1fr) 280px;
 
   align-items: center;
 
-  gap: 80px;
+  gap: 90px;
 }
 
 
-/* HERO TITLE */
+/* LABEL */
 
 .hero-label {
-  margin: 0 0 24px;
+  margin: 0 0 27px;
 
   color: #777;
 
   font-size: 10px;
+  font-weight: 600;
 
-  font-weight: 500;
-
-  letter-spacing: 2px;
+  letter-spacing: 2.2px;
 }
+
+
+/* TITLE */
 
 .hero h1 {
   margin: 0;
 
-  max-width: 850px;
+  max-width: 900px;
 
   font-family: "DM Sans", sans-serif;
 
-  font-size: clamp(70px, 9vw, 145px);
+  font-size: clamp(75px, 9.5vw, 155px);
 
   font-weight: 500;
 
-  line-height: 0.82;
+  line-height: 0.79;
 
-  letter-spacing: -8px;
+  letter-spacing: -9px;
+
+  animation: heroIn 1s var(--ease) both;
+}
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
-/* HERO DESCRIPTION */
+/* DESCRIPTION */
 
 .hero-description {
   align-self: end;
 
-  padding-bottom: 20px;
+  padding-bottom: 15px;
+
+  animation: fadeIn 1s 0.2s var(--ease) both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-description p {
-  margin: 0 0 35px;
+  margin: 0 0 38px;
 
   color: #555;
 
   font-size: 13px;
 
-  line-height: 1.8;
+  line-height: 1.9;
 }
 
 .hero-description span {
   color: #999;
 
   font-size: 9px;
+  font-weight: 600;
 
-  font-weight: 500;
-
-  letter-spacing: 1.5px;
+  letter-spacing: 1.6px;
 }
 
 
-/* =====================================================
-   GENERAL SECTION
-===================================================== */
+/* =========================================================
+   SECTIONS
+========================================================= */
 
 .section-block {
-  padding: 105px var(--content-padding);
+  padding: 125px var(--padding);
+
+  background: var(--surface);
 
   border-bottom: 1px solid var(--line);
 }
 
+.timer-section {
+  background: var(--bg);
+}
 
-/* SECTION HEADER */
+.gallery-section {
+  background: var(--surface);
+}
+
+
+/* SECTION HEADING */
 
 .section-heading {
+  position: relative;
+
   display: grid;
 
   grid-template-columns: 190px minmax(0, 1fr);
 
-  gap: 50px;
+  gap: 55px;
 
-  margin-bottom: 65px;
+  margin-bottom: 70px;
 }
 
 .section-heading > span {
-  padding-top: 9px;
+  padding-top: 10px;
 
   color: #888;
 
   font-size: 9px;
+  font-weight: 600;
 
-  font-weight: 500;
-
-  letter-spacing: 1.5px;
+  letter-spacing: 1.7px;
 }
 
 .section-heading h2 {
-  max-width: 700px;
-
   margin: 0;
+
+  max-width: 750px;
 
   font-family: "DM Sans", sans-serif;
 
-  font-size: clamp(52px, 6vw, 88px);
+  font-size: clamp(55px, 6vw, 90px);
 
   font-weight: 500;
 
-  line-height: 0.9;
+  line-height: 0.87;
 
   letter-spacing: -5px;
 }
 
 
-/* =====================================================
-   COMMON CARD RESET
-===================================================== */
+/* =========================================================
+   COMPONENT CARD RESET
+========================================================= */
 
 .day6-card {
   width: 100%;
@@ -376,28 +446,22 @@ input {
   background: transparent;
 
   border: 0;
-
   border-radius: 0;
 
   box-shadow: none;
 }
 
 .card-header {
-  min-height: 55px;
+  min-height: 60px;
 
-  margin: 0;
-
-  padding: 16px 0;
-
-  border-top: 1px solid var(--dark-line);
-
-  border-bottom: 1px solid var(--line);
+  padding: 17px 0;
 
   display: flex;
-
+  justify-content: space-between;
   align-items: center;
 
-  justify-content: space-between;
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line);
 
   gap: 20px;
 }
@@ -406,51 +470,43 @@ input {
   margin: 0;
 
   font-size: 15px;
+  font-weight: 600;
 
-  font-weight: 500;
+  letter-spacing: -0.2px;
 }
 
 .subtitle {
-  margin: 4px 0 0;
+  margin: 5px 0 0;
 
   color: #888;
 
-  font-size: 11px;
+  font-size: 10px;
 }
 
 
-/* =====================================================
-   TODO SECTION
-===================================================== */
+/* =========================================================
+   TODO
+========================================================= */
 
 .todo-stats {
   display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: 0;
-
-  margin: 0;
+  grid-template-columns: 1fr 1fr;
 
   border-bottom: 1px solid var(--line);
 }
 
 .stat {
-  min-height: 100px;
+  min-height: 110px;
 
-  padding: 22px 15px 22px 0;
-
-  background: transparent;
-
-  border-radius: 0;
-
-  border-right: 1px solid var(--line);
+  padding: 25px 20px 25px 0;
 
   display: flex;
-
   align-items: center;
 
-  gap: 15px;
+  gap: 18px;
+
+  border-right: 1px solid var(--line);
 }
 
 .stat:last-child {
@@ -466,21 +522,23 @@ input {
 .stat strong {
   display: block;
 
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 
   font-family: "DM Sans", sans-serif;
 
-  font-size: 28px;
-
+  font-size: 32px;
   font-weight: 500;
+
+  letter-spacing: -1px;
 }
 
 .stat small {
   color: #888;
 
-  font-size: 9px;
+  font-size: 8px;
+  font-weight: 600;
 
-  letter-spacing: 1px;
+  letter-spacing: 1.3px;
 
   text-transform: uppercase;
 }
@@ -491,77 +549,63 @@ input {
 }
 
 
+/* TODO LIST */
+
 .todo-list {
   display: flex;
-
   flex-direction: column;
-
-  gap: 0;
 }
 
 .todo-item {
-  min-height: 72px;
+  min-height: 76px;
 
-  padding: 17px 5px;
-
-  border: 0;
-
-  border-bottom: 1px solid var(--line);
-
-  border-radius: 0;
+  padding: 18px 8px;
 
   display: flex;
-
   align-items: center;
 
   gap: 18px;
 
+  border-bottom: 1px solid var(--line);
+
   transition:
-    padding 0.25s ease,
-    background 0.25s ease;
+    background 0.35s var(--ease),
+    padding 0.35s var(--ease);
 }
 
 .todo-item:hover {
-  transform: none;
-
-  padding-left: 14px;
-
-  padding-right: 14px;
+  padding-left: 18px;
+  padding-right: 18px;
 
   background: #f7f7f5;
-
-  border-color: var(--line);
 }
 
 .todo-icon {
-  width: 28px;
-  height: 28px;
+  width: 29px;
+  height: 29px;
 
   flex-shrink: 0;
 
   display: grid;
-
   place-items: center;
-
-  background: #eeeeeb;
 
   border-radius: 50%;
 
-  font-size: 11px;
+  background: #e8e8e4;
 
+  font-size: 10px;
   font-weight: 600;
 }
 
 .todo-completed .todo-icon {
-  background: #111;
-
-  color: #fff;
+  background: var(--black);
+  color: white;
 }
 
 .todo-content {
-  min-width: 0;
-
   flex: 1;
+
+  min-width: 0;
 }
 
 .todo-content span {
@@ -572,18 +616,16 @@ input {
   color: #222;
 
   font-size: 13px;
-
   line-height: 1.5;
 
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
 .todo-content small {
   display: block;
 
-  margin-top: 3px;
+  margin-top: 4px;
 
   color: #999;
 
@@ -593,48 +635,33 @@ input {
 .status {
   flex-shrink: 0;
 
-  padding: 0;
+  font-size: 8px;
+  font-weight: 600;
 
-  border-radius: 0;
-
-  background: transparent;
-
-  font-size: 9px;
-
-  font-weight: 500;
-
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
 
   text-transform: uppercase;
 }
 
 .status-done {
   color: #111;
-
-  background: transparent;
 }
 
 .status-pending {
   color: #999;
-
-  background: transparent;
 }
 
 
-/* =====================================================
+/* =========================================================
    TIMER
-===================================================== */
-
-.timer-section {
-  background: var(--background);
-}
+========================================================= */
 
 .timer-card {
   text-align: left;
 }
 
 .timer-display {
-  padding: 35px 0 30px;
+  padding: 45px 0 35px;
 }
 
 .timer-number {
@@ -642,37 +669,40 @@ input {
 
   font-family: "DM Sans", sans-serif;
 
-  font-size: clamp(85px, 12vw, 175px);
+  font-size: clamp(90px, 13vw, 185px);
 
   font-weight: 400;
 
-  line-height: 0.75;
+  line-height: 0.72;
 
-  letter-spacing: -10px;
+  letter-spacing: -11px;
 }
 
 .timer-display p {
-  margin: 35px 0 0;
+  margin: 38px 0 0;
 
   color: #888;
 
-  font-size: 9px;
+  font-size: 8px;
+  font-weight: 600;
 
   letter-spacing: 1.5px;
 
   text-transform: uppercase;
 }
 
+
+/* PROGRESS */
+
 .progress-container {
   width: 100%;
-
   height: 2px;
 
-  margin: 35px 0 30px;
+  margin: 38px 0 30px;
 
   overflow: hidden;
 
-  background: #d7d7d3;
+  background: #d5d5d1;
 
   border-radius: 0;
 }
@@ -680,59 +710,61 @@ input {
 .progress-bar {
   height: 100%;
 
-  background: #111;
+  background: var(--black);
 
   border-radius: 0;
 
   transition: width 1s linear;
 }
 
+
+/* TIMER BUTTONS */
+
 .timer-buttons {
   display: flex;
 
   justify-content: flex-start;
 
-  gap: 8px;
+  gap: 7px;
 }
 
 .timer-buttons button {
-  min-width: 100px;
+  min-width: 105px;
 
-  padding: 11px 20px;
+  padding: 12px 20px;
 
-  border: 1px solid #111;
+  border: 1px solid var(--black);
 
   border-radius: 0;
 
   background: transparent;
 
-  color: #111;
+  color: var(--black);
 
   cursor: pointer;
 
-  font-size: 9px;
+  font-size: 8px;
+  font-weight: 600;
 
-  font-weight: 500;
-
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
 
   text-transform: uppercase;
 
   transition:
-    background 0.2s ease,
-    color 0.2s ease;
+    background 0.3s var(--ease),
+    color 0.3s var(--ease),
+    transform 0.3s var(--ease);
 }
 
 .timer-buttons button:hover:not(:disabled) {
-  transform: none;
+  background: var(--black);
+  color: white;
 
-  background: #111;
-
-  color: #fff;
+  transform: translateY(-2px);
 }
 
 .timer-buttons button:disabled {
-  opacity: 0.35;
+  opacity: 0.3;
 
   cursor: not-allowed;
 }
@@ -741,41 +773,34 @@ input {
 .secondary-btn,
 .reset-btn {
   background: transparent;
-
-  color: #111;
+  color: var(--black);
 }
 
 
-/* =====================================================
+/* =========================================================
    SEARCH
-===================================================== */
+========================================================= */
 
 .search-box {
   width: 100%;
+  height: 60px;
 
-  height: 58px;
-
-  margin: 0 0 25px;
-
+  margin-bottom: 30px;
   padding: 0;
 
-  border: 0;
-
-  border-top: 1px solid var(--dark-line);
-
-  border-bottom: 1px solid var(--line);
-
-  border-radius: 0;
-
   display: flex;
-
   align-items: center;
 
   gap: 15px;
+
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line);
+
+  border-radius: 0;
 }
 
 .search-box:focus-within {
-  border-color: #111;
+  border-bottom-color: var(--black);
 }
 
 .search-box input {
@@ -784,12 +809,11 @@ input {
   flex: 1;
 
   border: 0;
-
   outline: 0;
 
   background: transparent;
 
-  color: #111;
+  color: var(--black);
 
   font-size: 13px;
 }
@@ -799,8 +823,6 @@ input {
 }
 
 .search-box button {
-  padding: 0;
-
   border: 0;
 
   background: transparent;
@@ -809,7 +831,8 @@ input {
 
   cursor: pointer;
 
-  font-size: 9px;
+  font-size: 8px;
+  font-weight: 600;
 
   letter-spacing: 1px;
 
@@ -817,20 +840,27 @@ input {
 }
 
 
-/* USER GRID */
+/* =========================================================
+   USERS
+========================================================= */
 
 .user-grid {
   display: grid;
 
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  column-gap: 45px;
+  column-gap: 50px;
 }
 
 .user-card {
   min-width: 0;
 
-  padding: 20px 0;
+  padding: 21px 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
 
   border: 0;
 
@@ -838,43 +868,35 @@ input {
 
   border-radius: 0;
 
-  display: flex;
-
-  align-items: center;
-
-  gap: 15px;
-
-  transition: padding 0.25s ease;
+  transition:
+    padding 0.3s var(--ease),
+    background 0.3s var(--ease);
 }
 
 .user-card:hover {
-  transform: none;
+  padding-left: 12px;
 
-  padding-left: 10px;
-
-  box-shadow: none;
+  background: #fafaf8;
 }
 
 .avatar {
-  width: 46px;
-  height: 46px;
+  width: 47px;
+  height: 47px;
 
   flex-shrink: 0;
 
   display: grid;
-
   place-items: center;
 
   border-radius: 50%;
 
-  background: #111;
+  background: var(--black);
 
-  color: #fff;
+  color: white;
 
   font-family: "DM Sans", sans-serif;
 
   font-size: 15px;
-
   font-weight: 500;
 }
 
@@ -887,14 +909,12 @@ input {
 
   overflow: hidden;
 
-  color: #111;
+  color: var(--black);
 
   font-size: 13px;
-
-  font-weight: 500;
+  font-weight: 600;
 
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
@@ -908,18 +928,13 @@ input {
   font-size: 10px;
 
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
 
-/* =====================================================
+/* =========================================================
    PHOTO GALLERY
-===================================================== */
-
-.gallery-section {
-  background: #fff;
-}
+========================================================= */
 
 .photo-grid {
   display: grid;
@@ -928,7 +943,7 @@ input {
 
   gap: 2px;
 
-  background: #111;
+  background: var(--black);
 }
 
 .photo-card {
@@ -937,16 +952,9 @@ input {
   overflow: hidden;
 
   border: 0;
-
   border-radius: 0;
 
-  background: #fff;
-}
-
-.photo-card:hover {
-  transform: none;
-
-  box-shadow: none;
+  background: white;
 }
 
 .photo-card img {
@@ -961,18 +969,18 @@ input {
   filter: grayscale(100%);
 
   transition:
-    filter 0.5s ease,
-    transform 0.6s ease;
+    transform 0.8s var(--ease),
+    filter 0.6s ease;
 }
 
 .photo-card:hover img {
-  filter: grayscale(0%);
+  filter: grayscale(0);
 
-  transform: scale(1.035);
+  transform: scale(1.06);
 }
 
 .photo-info {
-  padding: 14px 13px 16px;
+  padding: 15px 14px 17px;
 
   border-top: 1px solid var(--line);
 }
@@ -982,40 +990,36 @@ input {
 
   overflow: hidden;
 
-  color: #111;
+  color: var(--black);
 
   font-size: 11px;
-
-  font-weight: 500;
-
-  line-height: 1.4;
+  font-weight: 600;
 
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
 .photo-info span {
-  font-size: 8px;
-
   color: #999;
 
-  letter-spacing: 0.8px;
+  font-size: 8px;
+  letter-spacing: 1px;
 
   text-transform: uppercase;
 }
 
 
-/* =====================================================
+/* =========================================================
    LOADING
-===================================================== */
+========================================================= */
 
 .loading {
-  padding: 45px 0;
+  padding: 55px 0;
 
   color: #888;
 
   font-size: 9px;
+  font-weight: 600;
 
   letter-spacing: 1.5px;
 
@@ -1023,18 +1027,15 @@ input {
 }
 
 
-/* =====================================================
+/* =========================================================
    ERROR
-===================================================== */
+========================================================= */
 
 .error {
-  padding: 18px 0;
+  padding: 20px 0;
 
-  border-top: 1px solid #111;
-
+  border-top: 1px solid var(--black);
   border-bottom: 1px solid var(--line);
-
-  border-radius: 0;
 
   background: transparent;
 
@@ -1044,12 +1045,12 @@ input {
 }
 
 
-/* =====================================================
+/* =========================================================
    NO RESULTS
-===================================================== */
+========================================================= */
 
 .no-results {
-  padding: 70px 0;
+  padding: 80px 0;
 
   text-align: center;
 }
@@ -1062,8 +1063,7 @@ input {
   margin: 0 0 8px;
 
   font-size: 15px;
-
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .no-results p {
@@ -1075,14 +1075,14 @@ input {
 }
 
 
-/* =====================================================
+/* =========================================================
    FOOTER
-===================================================== */
+========================================================= */
 
 .day6-footer {
-  min-height: 80px;
+  min-height: 85px;
 
-  padding: 25px var(--content-padding);
+  padding: 25px var(--padding);
 
   display: grid;
 
@@ -1090,15 +1090,14 @@ input {
 
   align-items: center;
 
-  border-bottom: 1px solid var(--line);
+  background: var(--black);
 
-  color: #999;
+  color: #777;
 
   font-size: 8px;
+  font-weight: 600;
 
-  font-weight: 500;
-
-  letter-spacing: 1.2px;
+  letter-spacing: 1.3px;
 }
 
 .day6-footer div:nth-child(2) {
@@ -1110,24 +1109,24 @@ input {
 }
 
 
-/* =====================================================
+/* =========================================================
    TABLET
-===================================================== */
+========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
 
   :root {
-    --sidebar-width: 175px;
+    --sidebar: 185px;
   }
 
   .hero-content {
-    grid-template-columns: 1fr 210px;
+    grid-template-columns: minmax(0, 1fr) 220px;
 
-    gap: 40px;
+    gap: 45px;
   }
 
   .section-heading {
-    grid-template-columns: 150px 1fr;
+    grid-template-columns: 145px minmax(0, 1fr);
 
     gap: 30px;
   }
@@ -1138,34 +1137,31 @@ input {
 }
 
 
-/* =====================================================
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
 @media (max-width: 700px) {
 
   :root {
-    --sidebar-width: 0px;
-
-    --content-padding: 20px;
+    --sidebar: 0px;
+    --padding: 20px;
   }
 
   .day6-page {
     display: block;
   }
 
+
+  /* MOBILE HEADER */
+
   .sidebar {
     position: relative;
 
     width: 100%;
-
-    height: 60px;
+    height: 62px;
 
     padding: 0 20px;
-
-    border-right: 0;
-
-    border-bottom: 1px solid var(--line);
 
     display: flex;
 
@@ -1174,19 +1170,22 @@ input {
     align-items: center;
 
     justify-content: space-between;
+
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
   }
 
   .logo {
     margin: 0;
   }
 
-  .sidebar nav {
-    display: none;
-  }
-
+  .sidebar nav,
   .sidebar-bottom {
     display: none;
   }
+
+
+  /* MAIN */
 
   .main-content {
     width: 100%;
@@ -1198,7 +1197,7 @@ input {
   /* HERO */
 
   .hero {
-    min-height: 600px;
+    min-height: 650px;
 
     padding: 20px;
   }
@@ -1216,7 +1215,7 @@ input {
   }
 
   .hero h1 {
-    margin-top: 75px;
+    margin-top: 80px;
 
     font-size: clamp(60px, 17vw, 90px);
 
@@ -1224,24 +1223,24 @@ input {
   }
 
   .hero-description {
-    margin-top: 70px;
+    max-width: 300px;
+
+    margin-top: 80px;
 
     padding: 0;
-
-    max-width: 300px;
   }
 
 
   /* SECTIONS */
 
   .section-block {
-    padding: 70px 20px;
+    padding: 75px 20px;
   }
 
   .section-heading {
     display: block;
 
-    margin-bottom: 45px;
+    margin-bottom: 50px;
   }
 
   .section-heading > span {
@@ -1251,7 +1250,7 @@ input {
   }
 
   .section-heading h2 {
-    font-size: clamp(48px, 15vw, 70px);
+    font-size: clamp(48px, 15vw, 72px);
 
     letter-spacing: -4px;
   }
@@ -1264,7 +1263,7 @@ input {
   }
 
   .stat {
-    min-height: 80px;
+    min-height: 85px;
   }
 
 
@@ -1289,9 +1288,9 @@ input {
   .day6-footer {
     grid-template-columns: 1fr;
 
-    gap: 8px;
+    gap: 9px;
 
-    padding: 22px 20px;
+    padding: 25px 20px;
   }
 
   .day6-footer div,
@@ -1302,9 +1301,9 @@ input {
 }
 
 
-/* =====================================================
+/* =========================================================
    SMALL MOBILE
-===================================================== */
+========================================================= */
 
 @media (max-width: 450px) {
 
@@ -1315,7 +1314,7 @@ input {
   }
 
   .section-heading h2 {
-    font-size: 50px;
+    font-size: 49px;
   }
 
   .timer-number {
@@ -1334,5 +1333,81 @@ input {
 
   .photo-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ================================
+   COUNTDOWN EXTRA UI
+================================ */
+
+.timer-card {
+  position: relative;
+}
+
+.timer-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.timer-info div {
+  padding: 14px;
+  text-align: center;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.timer-info strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+  color: #111827;
+}
+
+.timer-info span {
+  font-size: 11px;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sound-btn {
+  padding: 11px 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: white;
+  color: #374151;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.sound-btn:hover {
+  border-color: #6366f1;
+  color: #6366f1;
+  transform: translateY(-2px);
+}
+
+.timer-display {
+  position: relative;
+}
+
+.timer-number {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+  .timer-info {
+    grid-template-columns: 1fr;
+  }
+
+  .sound-btn {
+    width: 100%;
   }
 }
