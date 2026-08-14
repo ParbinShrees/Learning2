@@ -171,7 +171,7 @@
 
 //     </div>
 //   );
-// }
+// }             
 
 // export default App;
 
@@ -183,8 +183,8 @@ import Services from "./Pages/Services";
 import LoginPage from "./Component/LoginPage";
 import Dashboard from "./Component/Dashboard";
 import Contact from "./Pages/Contact";
-
-
+import About from "./Pages/About";
+import Footer from "./Component/Footer";
 function App() {
   return (
     <div>
@@ -193,7 +193,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Route path="/about" element={<Abouts/>} />
+        <Route path="/about" element={<About/>} />
 
         <Route path="/services" element={<Services />} />
 
@@ -216,7 +216,7 @@ function App() {
           element={<h1>404 Not Found</h1>}
         />
       </Routes>
-    <Footeer />
+    <Footer />
     </div>
   );
 }
