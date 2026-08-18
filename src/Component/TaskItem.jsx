@@ -5,7 +5,8 @@ export default function TaskItem({ task }) {
   const { toggleTask, deleteTask } = useContext(TaskContext);
 
   return (
-    <div className="task">
+    <article className="task">
+      {/* Task Content */}
       <div className="left">
         <input
           type="checkbox"
@@ -18,9 +19,14 @@ export default function TaskItem({ task }) {
         </span>
       </div>
 
-      <button className="delete" onClick={() => deleteTask(task.id)}>
+      {/* Delete Button */}
+      <button
+        className="delete"
+        onClick={() => deleteTask(task.id)}
+        aria-label="Delete task"
+      >
         ✕
       </button>
-    </div>
+    </article>
   );
 }
