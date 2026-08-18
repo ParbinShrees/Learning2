@@ -5,22 +5,26 @@ export default function TaskForm() {
   const [text, setText] = useState("");
   const { addTask } = useContext(TaskContext);
 
-  const submit = (e) => {
+  // Add new task
+  const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!text.trim()) return;
+
     addTask(text);
     setText("");
   };
 
   return (
-    <form className="search-bar" onSubmit={submit}>
+    <form className="search-bar" onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Search or Add a Task..."
+        placeholder="Search or add a new task..."
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
 
-      <button>Add</button>
+      <button type="submit">Add</button>
     </form>
   );
 }
