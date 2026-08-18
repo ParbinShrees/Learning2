@@ -5,14 +5,17 @@ import TaskItem from "./TaskItem";
 export default function TaskList() {
   const { filteredTasks } = useContext(TaskContext);
 
-  if (filteredTasks.length === 0)
+  // Empty state
+  if (filteredTasks.length === 0) {
     return <p className="empty">No tasks found.</p>;
+  }
 
+  // Task list
   return (
-    <div>
+    <section className="task-list">
       {filteredTasks.map((task) => (
         <TaskItem key={task.id} task={task} />
       ))}
-    </div>
+    </section>
   );
 }
