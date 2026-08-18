@@ -1,17 +1,17 @@
 export default function About() {
   return (
-    <div className="about">
+    <section className="about">
       <h1>About TodoTask</h1>
 
       <p>
-        TodoTask is a simple React Task Manager built using Context API and
-        React Router.
+        TodoTask is a modern task management application built with React,
+        Context API, and React Router.
       </p>
 
       <p>
-        You can add tasks, mark them complete, and organize them into Pending
-        and Done sections.
+        It helps you organize your daily work by creating tasks, tracking
+        pending items, and managing completed tasks in one simple interface.
       </p>
-    </div>
+    </section>
   );
 }
