@@ -6,21 +6,24 @@ export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState("all");
 
+  // Add new task
   const addTask = (text) => {
-    if (!text.trim()) return;
+    const trimmed = text.trim();
+    if (!trimmed) return;
 
     const newTask = {
       id: Date.now(),
-      text,
+      text: trimmed,
       completed: false,
     };
 
-    setTasks([newTask, ...tasks]);
+    setTasks((prev) => [newTask, ...prev]);
   };
 
+  // Mark task as complete / pending
   const toggleTask = (id) => {
-    setTasks(
-      tasks.map((task) =>
+    setTasks((prev) =>
+      prev.map((task) =>
         task.id === id
           ? { ...task, completed: !task.completed }
           : task
@@ -28,28 +31,33 @@ export const TaskProvider = ({ children }) => {
     );
   };
 
+  // Delete task
   const deleteTask = (id) => {
-    setTasks(tasks.filter((t) => t.id !== id));
+    setTasks((prev) => prev.filter((task) => task.id !== id));
   };
 
+  // Filter tasks
   const filteredTasks = tasks.filter((task) => {
-    if (filter === "pending") return !task.completed;
-    if (filter === "done") return task.completed;
-
-    // ALL = only pending
-    return !task.completed;
+    switch (filter) {
+      case "pending":
+        return !task.completed;
+      case "done":
+        return task.completed;
+      default:
+        return !task.completed; // All shows active tasks
+    }
   });
 
   return (
     <TaskContext.Provider
       value={{
         tasks,
-        addTask,
-        toggleTask,
-        deleteTask,
         filter,
         setFilter,
         filteredTasks,
+        addTask,
+        toggleTask,
+        deleteTask,
       }}
     >
       {children}
