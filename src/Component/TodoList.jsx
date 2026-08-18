@@ -1,34 +1,41 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./Day6.css";
 
 function TodoList() {
+  // State
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Fetch todos
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
-      .then((response) => {
+    const fetchTodos = async () => {
+      try {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/todos?_limit=10"
+        );
+
         if (!response.ok) {
           throw new Error("Failed to fetch todos");
         }
 
-        return response.json();
-      })
-      .then((data) => {
+        const data = await response.json();
         setTodos(data);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
+      } catch (err) {
+        setError(err.message);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchTodos();
   }, []);
 
-  const completed = todos.filter((todo) => todo.completed).length;
-  const pending = todos.length - completed;
+  // Statistics
+  const completedCount = todos.filter((todo) => todo.completed).length;
+  const pendingCount = todos.length - completedCount;
 
+  // Loading state
   if (loading) {
     return (
       <section className="day6-card">
@@ -37,6 +44,7 @@ function TodoList() {
     );
   }
 
+  // Error state
   if (error) {
     return (
       <section className="day6-card">
@@ -47,6 +55,7 @@ function TodoList() {
 
   return (
     <section className="day6-card">
+      {/* Header */}
       <div className="card-header">
         <div>
           <p className="eyebrow">HOMEWORK 01</p>
@@ -60,11 +69,12 @@ function TodoList() {
         </div>
       </div>
 
+      {/* Statistics */}
       <div className="todo-stats">
         <div className="stat completed-stat">
           <span>✅</span>
           <div>
-            <strong>{completed}</strong>
+            <strong>{completedCount}</strong>
             <small>Completed</small>
           </div>
         </div>
@@ -72,19 +82,20 @@ function TodoList() {
         <div className="stat pending-stat">
           <span>⏳</span>
           <div>
-            <strong>{pending}</strong>
+            <strong>{pendingCount}</strong>
             <small>Pending</small>
           </div>
         </div>
       </div>
 
+      {/* Todo List */}
       <div className="todo-list">
         {todos.map((todo) => (
           <div
+            key={todo.id}
             className={`todo-item ${
               todo.completed ? "todo-completed" : ""
             }`}
-            key={todo.id}
           >
             <div className="todo-icon">
               {todo.completed ? "✓" : "○"}
@@ -92,9 +103,7 @@ function TodoList() {
 
             <div className="todo-content">
               <span>{todo.title}</span>
-              <small>
-                Task #{String(todo.id).padStart(2, "0")}
-              </small>
+              <small>Task #{String(todo.id).padStart(2, "0")}</small>
             </div>
 
             <span
