@@ -2,51 +2,57 @@ import { useState, useEffect } from "react";
 import "./Day6.css";
 
 function UserSearch() {
+  // State
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // Fetch users from API
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+
         if (!response.ok) {
           throw new Error("Failed to fetch users");
         }
 
-        return response.json();
-      })
-      .then((data) => {
+        const data = await response.json();
         setUsers(data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchUsers();
   }, []);
 
+  // Filter users by search text
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <section className="day6-card">
+      {/* Header */}
       <div className="card-header">
         <div>
           <p className="eyebrow">HOMEWORK 03</p>
           <h2>🔎 User Search</h2>
-          <p className="subtitle">
-            Search users fetched from the API
-          </p>
+          <p className="subtitle">Search users fetched from the API</p>
         </div>
 
         <div className="user-count">
           {filteredUsers.length}
-          <span>Results</span>
+          <span> Results</span>
         </div>
       </div>
 
+      {/* Search Input */}
       <div className="search-box">
         <span>🔍</span>
 
@@ -58,12 +64,11 @@ function UserSearch() {
         />
 
         {search && (
-          <button onClick={() => setSearch("")}>
-            ✕
-          </button>
+          <button onClick={() => setSearch("")}>✕</button>
         )}
       </div>
 
+      {/* Content */}
       {loading ? (
         <p className="loading">⏳ Loading users...</p>
       ) : filteredUsers.length === 0 ? (
@@ -82,9 +87,7 @@ function UserSearch() {
 
               <div className="user-info">
                 <h3>{user.name}</h3>
-
                 <p>✉️ {user.email}</p>
-
                 <p>📍 {user.address.city}</p>
               </div>
             </div>
