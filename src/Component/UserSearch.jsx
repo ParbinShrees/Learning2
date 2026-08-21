@@ -6,28 +6,34 @@ function UserSearch() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   // Fetch users from API
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/users"
-        );
+  const fetchUsers = async () => {
+    setLoading(true);
+    setError("");
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
+    try {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/users"
+      );
 
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error("Failed to fetch users");
       }
-    };
 
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error(error);
+      setError("Unable to load users. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch users when component loads
+  useEffect(() => {
     fetchUsers();
   }, []);
 
@@ -42,8 +48,12 @@ function UserSearch() {
       <div className="card-header">
         <div>
           <p className="eyebrow">HOMEWORK 03</p>
+
           <h2>🔎 User Search</h2>
-          <p className="subtitle">Search users fetched from the API</p>
+
+          <p className="subtitle">
+            Search users fetched from the API
+          </p>
         </div>
 
         <div className="user-count">
@@ -64,35 +74,81 @@ function UserSearch() {
         />
 
         {search && (
-          <button onClick={() => setSearch("")}>✕</button>
+          <button
+            type="button"
+            onClick={() => setSearch("")}
+          >
+            ✕
+          </button>
         )}
       </div>
 
       {/* Content */}
       {loading ? (
-        <p className="loading">⏳ Loading users...</p>
+        <p className="loading">
+          ⏳ Loading users...
+        </p>
+      ) : error ? (
+        <div className="no-results">
+          <span>⚠️</span>
+
+          <h3>Something went wrong</h3>
+
+          <p>{error}</p>
+
+          <button
+            type="button"
+            onClick={fetchUsers}
+          >
+            🔄 Try Again
+          </button>
+        </div>
       ) : filteredUsers.length === 0 ? (
         <div className="no-results">
           <span>😕</span>
+
           <h3>No users found</h3>
-          <p>Try searching for another name.</p>
+
+          <p>
+            Try searching for another name.
+          </p>
         </div>
       ) : (
         <div className="user-grid">
           {filteredUsers.map((user) => (
-            <div className="user-card" key={user.id}>
+            <div
+              className="user-card"
+              key={user.id}
+            >
               <div className="avatar">
                 {user.name.charAt(0)}
               </div>
 
               <div className="user-info">
                 <h3>{user.name}</h3>
-                <p>✉️ {user.email}</p>
-                <p>📍 {user.address.city}</p>
+
+                <p>
+                  ✉️ {user.email}
+                </p>
+
+                <p>
+                  📍 {user.address.city}
+                </p>
               </div>
             </div>
           ))}
         </div>
+      )}
+
+      {/* Refresh Button */}
+      {!loading && !error && (
+        <button
+          className="refresh-button"
+          type="button"
+          onClick={fetchUsers}
+        >
+          🔄 Refresh Users
+        </button>
       )}
     </section>
   );
