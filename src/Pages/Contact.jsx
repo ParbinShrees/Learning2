@@ -51,6 +51,12 @@ function Contact() {
             color: #111827;
           }
 
+          .contact-info h3 {
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: #2563eb;
+          }
+
           .contact-info p {
             margin: 15px 0;
             color: #6b7280;
@@ -120,7 +126,9 @@ function Contact() {
 
           <div className="contact-header">
             <h1>Contact Us</h1>
-            <p>Have a question? We'd love to hear from you.</p>
+            <p>
+              Have a question or feedback? We'd love to hear from you.
+            </p>
           </div>
 
           <div className="contact-content">
@@ -133,24 +141,38 @@ function Contact() {
                 we'll get back to you as soon as possible.
               </p>
 
-              <p>Email: example@email.com</p>
-              <p>Phone: +977 9800000000</p>
-              <p>Location: Kathmandu, Nepal</p>
+              <h3>Email</h3>
+              <p>example@email.com</p>
+
+              <h3>Phone</h3>
+              <p>+977 9800000000</p>
+
+              <h3>Location</h3>
+              <p>Kathmandu, Nepal</p>
+
+              <h3>Why Contact Us?</h3>
+              <p>
+                You can contact us for questions, feedback, suggestions,
+                or help with using TodoTask.
+              </p>
             </div>
 
             <form className="contact-form">
               <input
                 type="text"
                 placeholder="Your Name"
+                required
               />
 
               <input
                 type="email"
                 placeholder="Your Email"
+                required
               />
 
               <textarea
                 placeholder="Your Message"
+                required
               ></textarea>
 
               <button type="submit">
