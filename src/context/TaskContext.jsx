@@ -9,6 +9,7 @@ export const TaskProvider = ({ children }) => {
   // Add new task
   const addTask = (text) => {
     const trimmed = text.trim();
+
     if (!trimmed) return;
 
     const newTask = {
@@ -41,12 +42,25 @@ export const TaskProvider = ({ children }) => {
     switch (filter) {
       case "pending":
         return !task.completed;
+
       case "done":
         return task.completed;
+
       default:
-        return !task.completed; // All shows active tasks
+        return true;
     }
   });
+
+  // Task statistics
+  const totalTasks = tasks.length;
+
+  const completedTasks = tasks.filter(
+    (task) => task.completed
+  ).length;
+
+  const pendingTasks = tasks.filter(
+    (task) => !task.completed
+  ).length;
 
   return (
     <TaskContext.Provider
@@ -58,6 +72,9 @@ export const TaskProvider = ({ children }) => {
         addTask,
         toggleTask,
         deleteTask,
+        totalTasks,
+        completedTasks,
+        pendingTasks,
       }}
     >
       {children}
