@@ -8,31 +8,38 @@ function TodoList() {
   const [error, setError] = useState("");
 
   // Fetch todos
-  useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/todos?_limit=10"
-        );
+  const fetchTodos = async () => {
+    setLoading(true);
+    setError("");
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch todos");
-        }
+    try {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/todos?_limit=10"
+      );
 
-        const data = await response.json();
-        setTodos(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error("Failed to fetch todos");
       }
-    };
 
+      const data = await response.json();
+      setTodos(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch todos when component loads
+  useEffect(() => {
     fetchTodos();
   }, []);
 
   // Statistics
-  const completedCount = todos.filter((todo) => todo.completed).length;
+  const completedCount = todos.filter(
+    (todo) => todo.completed
+  ).length;
+
   const pendingCount = todos.length - completedCount;
 
   // Loading state
@@ -48,7 +55,18 @@ function TodoList() {
   if (error) {
     return (
       <section className="day6-card">
-        <p className="error">❌ {error}</p>
+        <div className="no-results">
+          <span>⚠️</span>
+          <h3>Unable to load todos</h3>
+          <p>{error}</p>
+
+          <button
+            type="button"
+            onClick={fetchTodos}
+          >
+            🔄 Try Again
+          </button>
+        </div>
       </section>
     );
   }
@@ -59,8 +77,12 @@ function TodoList() {
       <div className="card-header">
         <div>
           <p className="eyebrow">HOMEWORK 01</p>
+
           <h2>📝 Todo List</h2>
-          <p className="subtitle">Your daily tasks</p>
+
+          <p className="subtitle">
+            Your daily tasks from the API
+          </p>
         </div>
 
         <div className="todo-total">
@@ -73,6 +95,7 @@ function TodoList() {
       <div className="todo-stats">
         <div className="stat completed-stat">
           <span>✅</span>
+
           <div>
             <strong>{completedCount}</strong>
             <small>Completed</small>
@@ -81,6 +104,7 @@ function TodoList() {
 
         <div className="stat pending-stat">
           <span>⏳</span>
+
           <div>
             <strong>{pendingCount}</strong>
             <small>Pending</small>
@@ -103,12 +127,17 @@ function TodoList() {
 
             <div className="todo-content">
               <span>{todo.title}</span>
-              <small>Task #{String(todo.id).padStart(2, "0")}</small>
+
+              <small>
+                Task #{String(todo.id).padStart(2, "0")}
+              </small>
             </div>
 
             <span
               className={`status ${
-                todo.completed ? "status-done" : "status-pending"
+                todo.completed
+                  ? "status-done"
+                  : "status-pending"
               }`}
             >
               {todo.completed ? "Done" : "Pending"}
@@ -116,6 +145,15 @@ function TodoList() {
           </div>
         ))}
       </div>
+
+      {/* Refresh */}
+      <button
+        className="refresh-button"
+        type="button"
+        onClick={fetchTodos}
+      >
+        🔄 Refresh Todos
+      </button>
     </section>
   );
 }
