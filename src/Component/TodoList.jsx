@@ -1,71 +1,77 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./Day6.css";
 
 function TodoList() {
-  // State
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
 
-  // Fetch todos
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("all");
+
   const fetchTodos = async () => {
-    setLoading(true);
+    setLoading(todos.length === 0);
+    setRefreshing(todos.length > 0);
     setError("");
 
     try {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos?_limit=10"
+      const res = await fetch(
+        "https://jsonplaceholder.typicode.com/todos?_limit=15"
       );
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch todos");
-      }
+      if (!res.ok) throw new Error("Failed to fetch todos");
 
-      const data = await response.json();
+      const data = await res.json();
       setTodos(data);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
-  // Fetch todos when component loads
   useEffect(() => {
     fetchTodos();
   }, []);
 
-  // Statistics
-  const completedCount = todos.filter(
-    (todo) => todo.completed
-  ).length;
+  const filteredTodos = useMemo(() => {
+    return todos
+      .filter((todo) =>
+        todo.title.toLowerCase().includes(search.toLowerCase())
+      )
+      .filter((todo) => {
+        if (filter === "completed") return todo.completed;
+        if (filter === "pending") return !todo.completed;
+        return true;
+      });
+  }, [todos, search, filter]);
 
-  const pendingCount = todos.length - completedCount;
+  const completed = todos.filter((t) => t.completed).length;
+  const pending = todos.length - completed;
+  const progress =
+    todos.length === 0 ? 0 : Math.round((completed / todos.length) * 100);
 
-  // Loading state
   if (loading) {
     return (
       <section className="day6-card">
-        <p className="loading">⏳ Loading todos...</p>
+        <div className="loader">
+          <div className="spinner"></div>
+          <h3>Loading Todos</h3>
+          <p>Please wait while we fetch your tasks...</p>
+        </div>
       </section>
     );
   }
 
-  // Error state
   if (error) {
     return (
       <section className="day6-card">
-        <div className="no-results">
-          <span>⚠️</span>
-          <h3>Unable to load todos</h3>
+        <div className="error-box">
+          <h2>⚠ Something went wrong</h2>
           <p>{error}</p>
-
-          <button
-            type="button"
-            onClick={fetchTodos}
-          >
-            🔄 Try Again
-          </button>
+          <button onClick={fetchTodos}>Try Again</button>
         </div>
       </section>
     );
@@ -74,86 +80,111 @@ function TodoList() {
   return (
     <section className="day6-card">
       {/* Header */}
-      <div className="card-header">
+      <div className="todo-header">
         <div>
           <p className="eyebrow">HOMEWORK 01</p>
-
-          <h2>📝 Todo List</h2>
-
-          <p className="subtitle">
-            Your daily tasks from the API
-          </p>
+          <h1>Todo Dashboard</h1>
+          <p>Manage and track your daily API tasks</p>
         </div>
 
-        <div className="todo-total">
-          {todos.length}
-          <span>Total</span>
+        <button
+          className={`refresh-btn ${refreshing ? "rotate" : ""}`}
+          onClick={fetchTodos}
+        >
+          ↻
+        </button>
+      </div>
+
+      {/* Progress */}
+      <div className="progress-card">
+        <div className="progress-info">
+          <span>Overall Progress</span>
+          <strong>{progress}%</strong>
+        </div>
+
+        <div className="progress-bar">
+          <div
+            className="progress-fill"
+            style={{ width: `${progress}%` }}
+          ></div>
         </div>
       </div>
 
-      {/* Statistics */}
-      <div className="todo-stats">
-        <div className="stat completed-stat">
-          <span>✅</span>
-
-          <div>
-            <strong>{completedCount}</strong>
-            <small>Completed</small>
-          </div>
+      {/* Stats */}
+      <div className="stats-grid">
+        <div className="stat-card blue">
+          <h2>{todos.length}</h2>
+          <p>Total Tasks</p>
         </div>
 
-        <div className="stat pending-stat">
-          <span>⏳</span>
-
-          <div>
-            <strong>{pendingCount}</strong>
-            <small>Pending</small>
-          </div>
+        <div className="stat-card green">
+          <h2>{completed}</h2>
+          <p>Completed</p>
         </div>
+
+        <div className="stat-card orange">
+          <h2>{pending}</h2>
+          <p>Pending</p>
+        </div>
+      </div>
+
+      {/* Search */}
+      <input
+        className="search-box"
+        type="text"
+        placeholder="🔍 Search task..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+      {/* Filters */}
+      <div className="filters">
+        {["all", "completed", "pending"].map((item) => (
+          <button
+            key={item}
+            className={filter === item ? "active" : ""}
+            onClick={() => setFilter(item)}
+          >
+            {item}
+          </button>
+        ))}
       </div>
 
       {/* Todo List */}
       <div className="todo-list">
-        {todos.map((todo) => (
-          <div
-            key={todo.id}
-            className={`todo-item ${
-              todo.completed ? "todo-completed" : ""
-            }`}
-          >
-            <div className="todo-icon">
-              {todo.completed ? "✓" : "○"}
-            </div>
-
-            <div className="todo-content">
-              <span>{todo.title}</span>
-
-              <small>
-                Task #{String(todo.id).padStart(2, "0")}
-              </small>
-            </div>
-
-            <span
-              className={`status ${
-                todo.completed
-                  ? "status-done"
-                  : "status-pending"
+        {filteredTodos.length === 0 ? (
+          <div className="empty">
+            <h3>📭 No matching tasks</h3>
+            <p>Try changing your search or filter.</p>
+          </div>
+        ) : (
+          filteredTodos.map((todo) => (
+            <div
+              key={todo.id}
+              className={`todo-row ${
+                todo.completed ? "completed" : ""
               }`}
             >
-              {todo.completed ? "Done" : "Pending"}
-            </span>
-          </div>
-        ))}
-      </div>
+              <div className="circle">
+                {todo.completed ? "✓" : "○"}
+              </div>
 
-      {/* Refresh */}
-      <button
-        className="refresh-button"
-        type="button"
-        onClick={fetchTodos}
-      >
-        🔄 Refresh Todos
-      </button>
+              <div className="content">
+                <h4>{todo.title}</h4>
+                <small>ID #{todo.id}</small>
+              </div>
+
+              <span
+                className={
+                  todo.completed ? "badge done" : "badge pending"
+                }
+              >
+                {todo.completed ? "Completed" : "Pending"}
+              </span>
+            </div>
+          ))
+        )}
+      </div>
     </section>
   );
 }
