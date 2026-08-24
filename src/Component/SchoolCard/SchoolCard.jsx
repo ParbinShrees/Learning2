@@ -7,7 +7,10 @@ function SchoolCard({ school, addStudent }) {
     <section className="school-card">
       <div className="card-header">
         <h2>{school.name}</h2>
-        <span>{school.students.length} Students</span>
+
+        <span className="student-count">
+          {school.students.length} Students
+        </span>
       </div>
 
       <StudentList students={school.students} />
