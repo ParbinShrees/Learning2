@@ -1,25 +1,62 @@
-// 
+import { useState } from "react";
+import SchoolCard from "./components/SchoolCard/SchoolCard";
+import "./App.css";
 
+function App() {
+  const [schools, setSchools] = useState([
+    {
+      id: 1,
+      name: "Pokhara Secondary School",
+      students: [
+        { id: 1, name: "Parbin", grade: "A+" },
+        { id: 2, name: "Sujan", grade: "B+" },
+      ],
+    },
+    {
+      id: 2,
+      name: "Everest Academy",
+      students: [
+        { id: 3, name: "Aayush", grade: "A" },
+        { id: 4, name: "Nisha", grade: "A+" },
+      ],
+    },
+  ]);
 
-import { Routes, Route } from "react-router-dom";
+  const addStudent = (schoolId, student) => {
+    setSchools((prev) =>
+      prev.map((school) =>
+        school.id === schoolId
+          ? {
+              ...school,
+              students: [
+                ...school.students,
+                {
+                  id: Date.now(),
+                  ...student,
+                },
+              ],
+            }
+          : school
+      )
+    );
+  };
 
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import About from "./pages/About";
-
-export default function App() {
   return (
-    <>
-      {/* Navigation Bar */}
-      <Navbar />
+    <div className="app">
+      <h1>🏫 School Student Manager</h1>
+      <p>Manage students from different schools</p>
 
-      {/* Main Content */}
-      <main className="container">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </main>
-    </>
+      <div className="school-grid">
+        {schools.map((school) => (
+          <SchoolCard
+            key={school.id}
+            school={school}
+            addStudent={addStudent}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
+
+export default App;

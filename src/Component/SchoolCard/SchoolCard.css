@@ -1,0 +1,86 @@
+.school-card {
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.school-card:hover {
+  transform: translateY(-6px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.card-header h2 {
+  color: #1e40af;
+  font-size: 22px;
+}
+
+.card-header span {
+  background: #dbeafe;
+  color: #1d4ed8;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.student-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+}
+
+.student-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.student-item h4 {
+  margin: 0;
+}
+
+.grade {
+  background: #16a34a;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.student-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.student-form input,
+.student-form select {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+}
+
+.student-form button {
+  padding: 10px 18px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.student-form button:hover {
+  background: #1d4ed8;
+}

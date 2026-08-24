@@ -1,12 +1,21 @@
 import StudentList from "../StudentList/StudentList";
+import StudentForm from "../StudentForm/StudentForm";
+import "./SchoolCard.css";
 
-// Receives `school` from App
-function SchoolCard({ school }) {
+function SchoolCard({ school, addStudent }) {
   return (
-    <section>
-      <h2>{school.name}</h2>
-      {/* Level 1 ➜ Level 2: pass only the students array down */}
+    <section className="school-card">
+      <div className="card-header">
+        <h2>{school.name}</h2>
+        <span>{school.students.length} Students</span>
+      </div>
+
       <StudentList students={school.students} />
+
+      <StudentForm
+        schoolId={school.id}
+        addStudent={addStudent}
+      />
     </section>
   );
 }
