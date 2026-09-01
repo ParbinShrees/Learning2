@@ -1,4 +1,8 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom";
 
 import { useAuth } from "./context/AuthContext";
 
@@ -11,10 +15,16 @@ import Dashboard from "./pages/Dashboard";
 
 
 function ProtectedRoute({ children }) {
+
   const { user } = useAuth();
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return (
+      <Navigate
+        to="/login"
+        replace
+      />
+    );
   }
 
   return children;
@@ -22,10 +32,16 @@ function ProtectedRoute({ children }) {
 
 
 function PublicRoute({ children }) {
+
   const { user } = useAuth();
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return (
+      <Navigate
+        to="/dashboard"
+        replace
+      />
+    );
   }
 
   return children;
@@ -36,8 +52,6 @@ function App() {
 
   return (
     <Routes>
-
-      {/* Public pages */}
 
       <Route
         path="/"
@@ -59,9 +73,6 @@ function App() {
         element={<Contact />}
       />
 
-
-      {/* Login */}
-
       <Route
         path="/login"
         element={
@@ -70,9 +81,6 @@ function App() {
           </PublicRoute>
         }
       />
-
-
-      {/* Protected Dashboard */}
 
       <Route
         path="/dashboard"
@@ -83,13 +91,13 @@ function App() {
         }
       />
 
-
-      {/* Unknown URL */}
-
       <Route
         path="*"
         element={
-          <Navigate to="/" replace />
+          <Navigate
+            to="/"
+            replace
+          />
         }
       />
 
