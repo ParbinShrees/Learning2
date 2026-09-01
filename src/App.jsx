@@ -1,62 +1,101 @@
-import { useState } from "react";
-import SchoolCard from "./components/SchoolCard/SchoolCard";
-import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import { useAuth } from "./context/AuthContext";
+
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Contact from "./pages/Contact";
+import LoginPage from "./pages/LoginPage";
+import Dashboard from "./pages/Dashboard";
+
+
+function ProtectedRoute({ children }) {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
+
+function PublicRoute({ children }) {
+  const { user } = useAuth();
+
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+}
+
 
 function App() {
-  const [schools, setSchools] = useState([
-    {
-      id: 1,
-      name: "Pokhara Secondary School",
-      students: [
-        { id: 1, name: "Parbin", grade: "A+" },
-        { id: 2, name: "Sujan", grade: "B+" },
-      ],
-    },
-    {
-      id: 2,
-      name: "Everest Academy",
-      students: [
-        { id: 3, name: "Aayush", grade: "A" },
-        { id: 4, name: "Nisha", grade: "A+" },
-      ],
-    },
-  ]);
-
-  const addStudent = (schoolId, student) => {
-    setSchools((prev) =>
-      prev.map((school) =>
-        school.id === schoolId
-          ? {
-              ...school,
-              students: [
-                ...school.students,
-                {
-                  id: Date.now(),
-                  ...student,
-                },
-              ],
-            }
-          : school
-      )
-    );
-  };
 
   return (
-    <div className="app">
-      <h1>🏫 School Student Manager</h1>
-      <p>Manage students from different schools</p>
+    <Routes>
 
-      <div className="school-grid">
-        {schools.map((school) => (
-          <SchoolCard
-            key={school.id}
-            school={school}
-            addStudent={addStudent}
-          />
-        ))}
-      </div>
-    </div>
+      {/* Public pages */}
+
+      <Route
+        path="/"
+        element={<Home />}
+      />
+
+      <Route
+        path="/about"
+        element={<About />}
+      />
+
+      <Route
+        path="/services"
+        element={<Services />}
+      />
+
+      <Route
+        path="/contact"
+        element={<Contact />}
+      />
+
+
+      {/* Login */}
+
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
+
+
+      {/* Protected Dashboard */}
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+
+      {/* Unknown URL */}
+
+      <Route
+        path="*"
+        element={
+          <Navigate to="/" replace />
+        }
+      />
+
+    </Routes>
   );
 }
+
 
 export default App;
