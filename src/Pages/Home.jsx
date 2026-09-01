@@ -1,33 +1,58 @@
-import TaskForm from "../components/TaskForm";
-import FilterButtons from "../components/FilterButtons";
-import TaskList from "../components/TaskList";
+import { Link } from "react-router-dom";
 
-export default function Home() {
+import Navbar from "../components/Navbar";
+
+
+function Home() {
+
   return (
-    <main className="home">
-      {/* Page Header */}
-      <header className="home-header">
-        <h1>My Tasks</h1>
-        <p>Organize your work and stay productive.</p>
-      </header>
+    <>
+      <Navbar />
 
-      {/* Add New Task */}
-      <section className="home-section">
-        <h2>Add New Task</h2>
-        <TaskForm />
-      </section>
+      <main className="hero">
 
-      {/* Task Categories */}
-      <section className="home-section">
-        <h2>Task Categories</h2>
-        <FilterButtons />
-      </section>
+        <div className="hero-content">
 
-      {/* Display Tasks */}
-      <section className="home-section">
-        <h2>Your Tasks</h2>
-        <TaskList />
-      </section>
-    </main>
+          <p className="eyebrow">
+            SMART EDUCATION PLATFORM
+          </p>
+
+          <h1>
+            Learn, connect,
+            <br />
+            and grow together.
+          </h1>
+
+          <p>
+            EduSpace is a simple platform
+            designed to connect students,
+            teachers and schools in one place.
+          </p>
+
+          <div className="hero-actions">
+
+            <Link
+              to="/login"
+              className="primary-button"
+            >
+              Get Started
+            </Link>
+
+            <Link
+              to="/about"
+              className="secondary-button"
+            >
+              Learn More
+            </Link>
+
+          </div>
+
+        </div>
+
+      </main>
+    </>
   );
 }
+
+
+export default Home;
