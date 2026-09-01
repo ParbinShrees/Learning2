@@ -128,7 +128,7 @@ function SchoolCard({ school, addStudent, deleteStudent, updateStudent }) {
 
       {/* Add Student Form */}
       {showForm && (
-        <div className="form-wrapper">
+        <div className="form-wrapper"> ,./-==/
           <StudentForm
             schoolId={school.id}
             addStudent={handleStudentAdded}
