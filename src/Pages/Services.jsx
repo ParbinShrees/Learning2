@@ -1,67 +1,89 @@
-import "./Services.css";
+import Navbar from "../components/Navbar";
+
 
 function Services() {
+
   const services = [
+
     {
-      title: "Web Development",
+      title: "Student Management",
       description:
-        "We build modern, responsive, and user-friendly websites for businesses and individuals.",
-      features: ["Responsive Design", "React Development", "Performance"],
+        "Keep student information organized."
     },
+
     {
-      title: "UI/UX Design",
+      title: "Task Management",
       description:
-        "We create clean and attractive designs that provide a simple and enjoyable user experience.",
-      features: ["User Research", "Wireframes", "Modern Interfaces"],
+        "Teachers can create and manage learning tasks."
     },
+
     {
-      title: "Technical Support",
+      title: "Communication",
       description:
-        "We provide reliable technical support to help solve common website and technology problems.",
-      features: ["Bug Fixing", "Website Support", "Troubleshooting"],
+        "Make communication between students and teachers easier."
     },
+
+    {
+      title: "School Information",
+      description:
+        "Keep important school information available in one place."
+    }
+
   ];
 
+
   return (
-    <section className="services">
-      <div className="services-container">
-        <div className="services-header">
-          <p className="services-label">WHAT WE OFFER</p>
+    <>
+      <Navbar />
 
-          <h1>Our Services</h1>
+      <main className="page">
 
-          <p className="services-subtitle">
-            Professional solutions designed to help you build, improve, and
-            grow your digital presence.
+        <section className="page-header">
+
+          <p className="eyebrow">
+            SERVICES
           </p>
-        </div>
 
-        <div className="services-grid">
-          {services.map((service, index) => (
-            <div className="service-card" key={index}>
-              <div className="service-number">
-                0{index + 1}
+          <h1>
+            Everything in one place.
+          </h1>
+
+        </section>
+
+
+        <section className="service-grid">
+
+          {services.map(
+            (service, index) => (
+
+              <div
+                className="service-card"
+                key={index}
+              >
+
+                <span className="service-number">
+                  0{index + 1}
+                </span>
+
+                <h2>
+                  {service.title}
+                </h2>
+
+                <p>
+                  {service.description}
+                </p>
+
               </div>
 
-              <h2>{service.title}</h2>
+            )
+          )}
 
-              <p>{service.description}</p>
+        </section>
 
-              <ul className="service-features">
-                {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex}>
-                    ✓ {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <button type="button">Learn More</button>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+      </main>
+    </>
   );
 }
+
 
 export default Services;
