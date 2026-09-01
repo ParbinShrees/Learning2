@@ -1,40 +1,84 @@
-export default function About() {
+import Navbar from "../components/Navbar";
+
+
+function About() {
+
   return (
-    <section className="about">
-      <h1>About TodoTask</h1>
+    <>
+      <Navbar />
 
-      <p>
-        TodoTask is a modern and simple task management application built
-        with React, Context API, and React Router.
-      </p>
+      <main className="page">
 
-      <p>
-        It helps you organize your daily work by creating tasks, tracking
-        pending items, and managing completed tasks in one convenient place.
-      </p>
+        <section className="page-header">
 
-      <h2>What You Can Do</h2>
+          <p className="eyebrow">
+            ABOUT US
+          </p>
 
-      <ul>
-        <li>Create and manage your daily tasks.</li>
-        <li>Track pending and completed tasks.</li>
-        <li>Navigate between pages using React Router.</li>
-        <li>Manage application data using Context API.</li>
-      </ul>
+          <h1>
+            Education made simpler.
+          </h1>
 
-      <h2>Why TodoTask?</h2>
+          <p>
+            EduSpace brings useful education
+            tools together in one simple
+            platform.
+          </p>
 
-      <p>
-        TodoTask is designed to keep task management simple and organized.
-        Whether you are planning your day, managing your studies, or
-        tracking work, TodoTask helps you stay focused and productive.
-      </p>
+        </section>
 
-      <p>
-        This project is also a practical example of building a React
-        application using reusable components, state management, and
-        client-side routing.
-      </p>
-    </section>
+
+        <section className="info-grid">
+
+          <div className="info-card">
+
+            <h2>
+              Students
+            </h2>
+
+            <p>
+              Manage tasks, view learning
+              information and stay connected
+              with teachers.
+            </p>
+
+          </div>
+
+
+          <div className="info-card">
+
+            <h2>
+              Teachers
+            </h2>
+
+            <p>
+              Share tasks, communicate with
+              students and manage classroom
+              activities.
+            </p>
+
+          </div>
+
+
+          <div className="info-card">
+
+            <h2>
+              Schools
+            </h2>
+
+            <p>
+              Organize school information
+              and improve communication.
+            </p>
+
+          </div>
+
+        </section>
+
+      </main>
+    </>
   );
 }
+
+
+export default About;
